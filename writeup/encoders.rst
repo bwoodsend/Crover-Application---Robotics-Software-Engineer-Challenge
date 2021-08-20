@@ -27,6 +27,12 @@ correct.
 
 .. plot::
 
+    from encoder_plots import positional_errors
+    positional_errors()
+
+
+.. plot::
+
     from encoder_plots import orientation
     orientation()
 

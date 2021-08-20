@@ -32,6 +32,14 @@ def positional():
     pylab.show()
 
 
+def positional_errors():
+    pylab.title("Estimated and Real Positions of the Car")
+    pylab.plot(times, position_errors(positions, times), color="r")
+    pylab.xlabel("Time (seconds)")
+    pylab.ylabel("Distance from true path")
+    pylab.show()
+
+
 def orientation():
     pylab.title("Estimated and Real Orientations of the Car")
     orientation_plot(times, orientations, label="encoders", color="r")
