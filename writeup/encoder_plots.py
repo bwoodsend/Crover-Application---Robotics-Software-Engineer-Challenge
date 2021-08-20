@@ -41,3 +41,16 @@ def orientation():
     pylab.ylabel("Orientation $z$")
     pylab.xlabel("Time (seconds)")
     pylab.show()
+
+
+def orientation_difference():
+    pylab.title("Difference Between Estimated and Real Orientations of the Car")
+
+    truth_times = ground_truth[:, 0] / 1e9
+    orientations_ = np.interp(truth_times, times, orientations)
+    orientation_plot(truth_times, orientations_ - ground_truth_orientations,
+                     color="r")
+
+    pylab.ylabel("$\Delta$ Orientation $z$")
+    pylab.xlabel("Time (seconds)")
+    pylab.show()

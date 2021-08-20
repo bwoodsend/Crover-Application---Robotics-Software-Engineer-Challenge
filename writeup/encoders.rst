@@ -31,6 +31,12 @@ correct.
     orientation()
 
 
+.. plot::
+
+    from encoder_plots import orientation_difference
+    orientation_difference()
+
+
 The estimated position and orientation follows the same shape well but a
 *drifting* error can be seen to be gradually accumulating.
 On their own, the encoders perform well in the short term but get progressively
