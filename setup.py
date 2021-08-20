@@ -7,7 +7,7 @@ setup(
     python_requires='>=3.6',
     description="A coding challenge for a Twig application.",
     install_requires=[
-        "numpy>=17",
+        "numpy>=1.17",
     ],
     name='crover_challenge',
     packages=find_packages(include=['crover_challenge', 'crover_challenge.*']),
