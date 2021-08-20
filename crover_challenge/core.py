@@ -7,17 +7,16 @@ def reduce(x):
 
 
 def rotate(xy, theta):
-    """Apply a rotation (in radians) to a series of points."""
-    assert len(xy) == len(theta)
-    assert xy.ndim == 2
+    """Apply a rotation (in radians) to a point."""
+    assert xy.shape == (2,)
 
-    rotations = np.empty((len(theta), 2, 2))
-    rotations[:, 0, 0] = np.cos(theta)
-    rotations[:, 0, 1] = np.sin(theta)
-    rotations[:, 1, 0] = -np.sin(theta)
-    rotations[:, 1, 1] = np.cos(theta)
+    rotation = np.empty((2, 2))
+    rotation[0, 0] = np.cos(theta)
+    rotation[0, 1] = np.sin(theta)
+    rotation[1, 0] = -np.sin(theta)
+    rotation[1, 1] = np.cos(theta)
 
-    return (xy[:, np.newaxis] @ rotations)[:, 0]
+    return xy @ rotation
 
 
 def interpolate_points(times, times_p, values_p):
