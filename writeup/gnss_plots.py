@@ -69,7 +69,7 @@ def show_smooth_path_error_over_time(n):
     T = len(smooth_path)
     path_error_table = np.empty((T, 1))
     for t in range(1, T):
-        error = position_error(smooth_path[:t], gnss[:t, 0])
+        error = position_error(smooth_path[:t], gnss[:t, 0] / 1e9)
         path_error_table[t] = error
     pylab.title("Positional error over time, $n=5$")
     pylab.plot(path_error_table)
