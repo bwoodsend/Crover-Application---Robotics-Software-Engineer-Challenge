@@ -36,10 +36,10 @@ def path(positions, orientations=None, label="", color=""):
 def orientation_plot(times, thetas, label="", color=""):
     """Plot a series of angles against time."""
 
-    # Modulo angles into the range 0 to 2π...
-    thetas = thetas % (2 * np.pi)
+    # Modulo angles into the range -π to π...
+    thetas = (thetas + np.pi) % (2 * np.pi) - np.pi
     # ...but split the plots so that there is no vertical line every time we
-    # jump from 2π to 0 or vice-versa.
+    # jump from -π to π or vice-versa.
     break_at = np.nonzero(np.abs(np.diff(thetas)) > np.pi)[0]
     start = 0
     for end in break_at:
