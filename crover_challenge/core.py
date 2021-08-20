@@ -18,3 +18,9 @@ def rotate(xy, theta):
     rotations[:, 1, 1] = np.cos(theta)
 
     return (xy[:, np.newaxis] @ rotations)[:, 0]
+
+
+def interpolate_points(times, times_p, values_p):
+    """Resample a points+time series."""
+    # This is just a multidimensional wrapper for np.interp() which is 1D only.
+    return np.transpose([np.interp(times, times_p, i) for i in values_p.T])

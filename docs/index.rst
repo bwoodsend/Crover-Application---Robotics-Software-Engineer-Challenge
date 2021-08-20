@@ -11,7 +11,7 @@ Welcome to crover_challange's documentation!
     :caption: Contents:
 
     encoders
-
+    gnss
 
 
 Indices and tables

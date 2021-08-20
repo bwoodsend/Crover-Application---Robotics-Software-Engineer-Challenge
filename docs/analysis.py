@@ -15,16 +15,20 @@ q3, q0 = ground_truth[:, [5, 6]].T
 ground_truth_orientations = np.arctan2(2 * (q0 * q3 + 0), 1 - 2 * (0 + q3**2))
 
 
-def path(positions, orientations, label="", color=""):
+def path(positions, orientations=None, label="", color=""):
     """Plot a series of positions."""
     # Draw the path.
     pylab.plot(*positions.T, linewidth=.5, label=label, c=color)
 
     # Mark the start and end of the path with an arrow.
     ends = positions[[0, -1]]
-    end_orientations = orientations[[0, -1]]
-    pylab.quiver(*ends.T, np.cos(end_orientations), np.sin(end_orientations),
-                 color=color, scale=.4, units="xy")
+    if orientations is None:
+        pylab.scatter(*ends.T, s=.4, c=color)
+    else:
+        end_orientations = orientations[[0, -1]]
+        pylab.quiver(*ends.T,
+                     np.cos(end_orientations),np.sin(end_orientations),
+                     color=color, scale=.4, units="xy")
 
 
 def orientation_plot(times, thetas, label="", color=""):
