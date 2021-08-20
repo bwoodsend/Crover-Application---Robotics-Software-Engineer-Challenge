@@ -3,7 +3,7 @@ from pathlib import Path
 import numpy as np
 from matplotlib import pylab
 
-from crover_challenge.core import interpolate_points
+from crover_challenge.core import interpolate_points, quaternion_z_angle
 
 DATA = Path(__file__, "../../data").resolve()
 
@@ -11,10 +11,7 @@ odom = np.loadtxt(DATA / "odom.csv", skiprows=1, delimiter=",")
 gnss = np.loadtxt(DATA / "gnss.csv", skiprows=1, delimiter=",")
 ground_truth = np.loadtxt(DATA / "ground_truth.csv", skiprows=1, delimiter=",")
 
-# Convert the quaternion orientation to a regular angle.
-# https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles#Quaternion_to_Euler_angles_conversion
-q3, q0 = ground_truth[:, [5, 6]].T
-ground_truth_orientations = np.arctan2(2 * (q0 * q3 + 0), 1 - 2 * (0 + q3**2))
+ground_truth_orientations = quaternion_z_angle(0, 0, *ground_truth[:, [5, 6]].T)
 
 
 def path(positions, orientations=None, label="", color=""):

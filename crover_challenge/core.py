@@ -23,3 +23,11 @@ def interpolate_points(times, times_p, values_p):
     """Resample a points+time series."""
     # This is just a multidimensional wrapper for np.interp() which is 1D only.
     return np.transpose([np.interp(times, times_p, i) for i in values_p.T])
+
+
+
+def quaternion_z_angle(x, y, z, w):
+    """Convert the quaternion rotation about the z axis to a regular angle in
+    radians."""
+    # https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles#Quaternion_to_Euler_angles_conversion
+    return np.arctan2(2 * (w * z + x * y), 1 - 2 * (y**2 + z**2))
