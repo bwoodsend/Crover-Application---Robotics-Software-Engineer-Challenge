@@ -1,14 +1,34 @@
-import numpy as np
+import collections
 
 
-def rolling_mean(x, n=10):
-    """Take a continuous average of a sequence of values. Each output value is
+class RollingMean:
+    """Take a continuous average of a series of values. Each output value is
     defined as the average of the last ``n`` input values.
 
-    The output array is shortened by ``n`` because the first ``n`` values don't
-    have enough preceding values to average over.
+    For the first ``n - 1`` values, the output will be an average of less
+    values.
     """
-    if not n:
-        return x
-    cumulated = np.cumsum(x, axis=0)
-    return (cumulated[n:] - cumulated[:len(cumulated)-n]) / n
+    def __init__(self, n=10):
+        self.n = n
+        self._recent = collections.deque(maxlen=n)
+        self._recent_total = 0
+
+    def new_value(self, x):
+        """Add a new reading, return the current average."""
+        if self.n == 0:
+            return x
+
+        # To avoid having to repeatedly sum ``self._recent``, its total is
+        # instead tracked separately - incrementing it for each new value in and
+        # decrementing it for each old value dropped.y
+        if len(self._recent) == self.n:
+            self._recent_total -= self._recent[0]
+        self._recent_total += x
+        self._recent.append(x)
+
+        return self.current
+
+    @property
+    def current(self):
+        """The current average of the last ``n`` values."""
+        return self._recent_total / len(self._recent)
