@@ -21,7 +21,7 @@ def smoothened_path_error(n):
     for (i, xy) in enumerate(gnss[:, [1, 2]]):
         smooth_path[i] = mean.new_value(xy)
 
-    error = position_error(smooth_path, gnss[:, 0])
+    error = position_error(smooth_path, gnss[:, 0] / 1e9)
     return error, smooth_path
 
 
