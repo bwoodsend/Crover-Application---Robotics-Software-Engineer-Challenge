@@ -48,11 +48,15 @@ def orientation_plot(times, thetas, label="", color=""):
     pylab.plot(times[start:], thetas[start:], label=label, c=color)
 
 
-def position_error(points, times):
-    """Get an overall average error for an estimated path."""
+def position_errors(points, times):
+    """Get a positional error for each point in an estimated path."""
     # Resample the "truth" points so that they use the same times as the
     # smoothened GNSS points.
     truth_points = interpolate_points(times, ground_truth[:, 0],
                                       ground_truth[:, [1, 2]])
-    # Get an overall deviation error.
-    return np.hypot(*(points - truth_points).T).mean()
+    return np.hypot(*(points - truth_points).T)
+
+
+def position_error(points, times):
+    """Get an overall average error for an estimated path."""
+    return position_errors(points, times).mean()
