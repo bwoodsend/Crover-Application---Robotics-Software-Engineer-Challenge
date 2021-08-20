@@ -13,6 +13,7 @@ Welcome to crover_challange's documentation!
     encoders
     gnss
     combined
+    methods
 
 
 Indices and tables
