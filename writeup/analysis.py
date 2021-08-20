@@ -52,7 +52,7 @@ def position_errors(points, times):
     """Get a positional error for each point in an estimated path."""
     # Resample the "truth" points so that they use the same times as the
     # smoothened GNSS points.
-    truth_points = interpolate_points(times, ground_truth[:, 0],
+    truth_points = interpolate_points(times, ground_truth[:, 0] / 1e9,
                                       ground_truth[:, [1, 2]])
     return np.hypot(*(points - truth_points).T)
 
