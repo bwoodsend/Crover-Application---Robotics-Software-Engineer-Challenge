@@ -3,6 +3,8 @@ from pathlib import Path
 import numpy as np
 from matplotlib import pylab
 
+from crover_challenge.core import interpolate_points
+
 DATA = Path(__file__, "../../data").resolve()
 
 odom = np.loadtxt(DATA / "odom.csv", skiprows=1, delimiter=",")
@@ -44,3 +46,13 @@ def orientation_plot(times, thetas, label="", color=""):
         pylab.plot(times[start:end], thetas[start:end], c=color)
         start = end + 1
     pylab.plot(times[start:], thetas[start:], label=label, c=color)
+
+
+def position_error(points, times):
+    """Get an overall average error for an estimated path."""
+    # Resample the "truth" points so that they use the same times as the
+    # smoothened GNSS points.
+    truth_points = interpolate_points(times, ground_truth[:, 0],
+                                      ground_truth[:, [1, 2]])
+    # Get an overall deviation error.
+    return np.hypot(*(points - truth_points).T).mean()

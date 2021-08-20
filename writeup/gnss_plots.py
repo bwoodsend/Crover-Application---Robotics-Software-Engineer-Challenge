@@ -17,13 +17,7 @@ def show_smoothened(n):
     for (i, xy) in enumerate(gnss[:, [1, 2]]):
         points[i] = mean.new_value(xy)
 
-    # Resample the "truth" points so that they use the same times as the
-    # smoothened GNSS points.
-    times = gnss[:, 0]
-    truth_points = interpolate_points(times, ground_truth[:, 0],
-                                      ground_truth[:, [1, 2]])
-    # Get an overall deviation error.
-    error = np.hypot(*(points - truth_points).T).mean()
+    error = position_error(points, gnss[:, 0])
 
     if n:
         pylab.title(
